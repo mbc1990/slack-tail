@@ -116,7 +116,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -186,7 +186,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -258,7 +258,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -333,7 +333,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -399,7 +399,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -468,7 +468,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -540,7 +540,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -606,7 +606,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -676,7 +676,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -742,7 +742,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -812,7 +812,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -882,7 +882,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
@@ -948,7 +948,7 @@ impl<C: hyper::client::Connect>FilesApi for FilesApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )

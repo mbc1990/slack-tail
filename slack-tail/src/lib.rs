@@ -1,11 +1,3 @@
-#[macro_use]
-extern crate serde_derive;
-
-extern crate hyper;
-extern crate serde;
-extern crate serde_json;
-extern crate futures;
-extern crate url;
 extern crate swagger;
 
 // pub mod apis;
@@ -13,10 +5,12 @@ extern crate swagger;
 mod slack_client;
 // mod codegen;
 
+use swagger::apis::*;
+use swagger::models::*;
+
 #[cfg(test)]
 mod tests {
     use crate::slack_client::SlackClient;
-    // use crate::codegen::apis::ApiApiClient;
 
     #[test]
     fn it_works() {

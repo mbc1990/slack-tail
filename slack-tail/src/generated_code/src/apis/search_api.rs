@@ -57,6 +57,8 @@ impl<C: hyper::client::Connect>SearchApi for SearchApiClient<C> {
 
         let query_string = {
             let mut query = ::url::form_urlencoded::Serializer::new(String::new());
+            /*
+            // TODO: Generated code doesn't compile, but I should come back and fix this
             query.append_pair("sort_dir", &sort_dir.to_string());
             query.append_pair("query", &query.to_string());
             query.append_pair("sort", &sort.to_string());
@@ -64,6 +66,7 @@ impl<C: hyper::client::Connect>SearchApi for SearchApiClient<C> {
             query.append_pair("token", &token.to_string());
             query.append_pair("highlight", &highlight.to_string());
             query.append_pair("page", &page.to_string());
+            */
             for (key, val) in &auth_query {
                 query.append_pair(key, val);
             }
@@ -107,7 +110,7 @@ impl<C: hyper::client::Connect>SearchApi for SearchApiClient<C> {
                 }
             })
             .and_then(|body| {
-                let parsed: Result<::std::collections::HashMap<String, Value>, _> = serde_json::from_slice(&body);
+                let parsed: Result<::std::collections::HashMap<String, Value>> = serde_json::from_slice(&body);
                 parsed.map_err(|e| Error::from(e))
             })
         )
