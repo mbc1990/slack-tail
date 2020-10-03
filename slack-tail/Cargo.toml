@@ -8,3 +8,5 @@ edition = "2018"
 
 [dependencies]
 swagger = { path = "src/generated_code/" }
+hyper = "0.11.6"
+tokio-core = "*"
