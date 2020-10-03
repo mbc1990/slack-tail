@@ -1,0 +1,51 @@
+# ObjsMessage
+
+## Properties
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**attachments** | [**Vec<::models::ObjsMessageAttachments>**](objs_message_attachments.md) |  | [optional] [default to null]
+**blocks** | [***::models::Blocks**](blocks.md) |  | [optional] [default to null]
+**bot_id** | [***Value**](Value.md) |  | [optional] [default to null]
+**bot_profile** | [***::models::ObjsBotProfile**](objs_bot_profile.md) |  | [optional] [default to null]
+**client_msg_id** | **String** |  | [optional] [default to null]
+**comment** | [***::models::ObjsComment**](objs_comment.md) |  | [optional] [default to null]
+**display_as_bot** | **bool** |  | [optional] [default to null]
+**file** | [***::models::ObjsFile**](objs_file.md) |  | [optional] [default to null]
+**files** | [**Vec<::models::ObjsFile>**](objs_file.md) |  | [optional] [default to null]
+**icons** | [***::models::ObjsMessageIcons**](objs_message_icons.md) |  | [optional] [default to null]
+**inviter** | [***::models::DefsUserId**](defs_user_id.md) |  | [optional] [default to null]
+**is_delayed_message** | **bool** |  | [optional] [default to null]
+**is_intro** | **bool** |  | [optional] [default to null]
+**is_starred** | **bool** |  | [optional] [default to null]
+**last_read** | [***::models::DefsTs**](defs_ts.md) |  | [optional] [default to null]
+**latest_reply** | [***::models::DefsTs**](defs_ts.md) |  | [optional] [default to null]
+**name** | **String** |  | [optional] [default to null]
+**old_name** | **String** |  | [optional] [default to null]
+**parent_user_id** | [***::models::DefsUserId**](defs_user_id.md) |  | [optional] [default to null]
+**permalink** | **String** |  | [optional] [default to null]
+**pinned_to** | [**Vec<::models::DefsChannel>**](defs_channel.md) |  | [optional] [default to null]
+**purpose** | **String** |  | [optional] [default to null]
+**reactions** | [**Vec<::models::ObjsReaction>**](objs_reaction.md) |  | [optional] [default to null]
+**replies** | [**Vec<::models::ObjsMessageReplies>**](objs_message_replies.md) |  | [optional] [default to null]
+**reply_count** | **i32** |  | [optional] [default to null]
+**reply_users** | [**Vec<::models::DefsUserId>**](defs_user_id.md) |  | [optional] [default to null]
+**reply_users_count** | **i32** |  | [optional] [default to null]
+**source_team** | [***::models::DefsWorkspaceId**](defs_workspace_id.md) |  | [optional] [default to null]
+**subscribed** | **bool** |  | [optional] [default to null]
+**subtype** | **String** |  | [optional] [default to null]
+**team** | [***::models::DefsWorkspaceId**](defs_workspace_id.md) |  | [optional] [default to null]
+**text** | **String** |  | [default to null]
+**thread_ts** | [***::models::DefsTs**](defs_ts.md) |  | [optional] [default to null]
+**topic** | **String** |  | [optional] [default to null]
+**ts** | [***::models::DefsTs**](defs_ts.md) |  | [default to null]
+**_type** | **String** |  | [default to null]
+**unread_count** | **i32** |  | [optional] [default to null]
+**upload** | **bool** |  | [optional] [default to null]
+**user** | [***::models::DefsUserId**](defs_user_id.md) |  | [optional] [default to null]
+**user_profile** | [***::models::ObjsUserProfileShort**](objs_user_profile_short.md) |  | [optional] [default to null]
+**user_team** | [***::models::DefsWorkspaceId**](defs_workspace_id.md) |  | [optional] [default to null]
+**username** | **String** |  | [optional] [default to null]
+
+[[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
+
+
