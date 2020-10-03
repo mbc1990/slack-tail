@@ -14,7 +14,7 @@ use std::borrow::Cow;
 use std::collections::HashMap;
 
 use hyper;
-use serde_json;
+use serde_json::*;
 use futures;
 use futures::{Future, Stream};
 

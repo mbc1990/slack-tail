@@ -1,6 +1,7 @@
 use hyper;
 use serde;
-use serde_json;
+use serde_json::*;
+use serde_json::Value;
 
 #[derive(Debug)]
 pub enum Error<T> {
