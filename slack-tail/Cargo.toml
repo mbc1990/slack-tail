@@ -7,6 +7,8 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-swagger = { path = "src/generated_code/" }
-hyper = "0.11.6"
-tokio-core = "*"
+openapi = { path = "src/generated_code/" }
+hyper = "0.13.8"
+serde_json = "1.0"
+futures = "0.3.5"
+tokio = "0.2.22"

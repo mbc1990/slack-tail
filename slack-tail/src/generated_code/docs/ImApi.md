@@ -4,31 +4,33 @@ All URIs are relative to *https://slack.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**im_close**](ImApi.md#im_close) | **Post** /im.close | 
-[**im_history**](ImApi.md#im_history) | **Get** /im.history | 
-[**im_list**](ImApi.md#im_list) | **Get** /im.list | 
-[**im_mark**](ImApi.md#im_mark) | **Post** /im.mark | 
-[**im_open**](ImApi.md#im_open) | **Post** /im.open | 
-[**im_replies**](ImApi.md#im_replies) | **Get** /im.replies | 
+[**im_close**](ImApi.md#im_close) | **post** /im.close | 
+[**im_history**](ImApi.md#im_history) | **get** /im.history | 
+[**im_list**](ImApi.md#im_list) | **get** /im.list | 
+[**im_mark**](ImApi.md#im_mark) | **post** /im.mark | 
+[**im_open**](ImApi.md#im_open) | **post** /im.open | 
+[**im_replies**](ImApi.md#im_replies) | **get** /im.replies | 
 
 
-# **im_close**
-> ::std::collections::HashMap<String, Value> im_close(ctx, token, channel)
+
+## im_close
+
+> ::std::collections::HashMap<String, serde_json::Value> im_close(token, channel)
 
 
 Close a direct message channel.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
-  **token** | **String**| Authentication token. Requires scope: &#x60;im:write&#x60; | 
-  **channel** | **String**| Direct message channel to close. | 
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token** | **String** | Authentication token. Requires scope: `im:write` | [required] |
+**channel** | **String** | Direct message channel to close. | [required] |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -36,40 +38,35 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json
- - **Accept**: application/json
+- **Content-Type**: application/x-www-form-urlencoded, application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **im_history**
-> ::std::collections::HashMap<String, Value> im_history(ctx, optional)
+
+## im_history
+
+> ::std::collections::HashMap<String, serde_json::Value> im_history(count, unreads, inclusive, token, oldest, channel, latest)
 
 
 Fetches history of messages and events from direct message channel.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **count** | **i32**| Number of messages to return, between 1 and 1000. | 
- **unreads** | **bool**| Include &#x60;unread_count_display&#x60; in the output? | 
- **inclusive** | **bool**| Include messages with latest or oldest timestamp in results. | 
- **token** | **String**| Authentication token. Requires scope: &#x60;im:history&#x60; | 
- **oldest** | **f32**| Start of time range of messages to include in results. | 
- **channel** | **String**| Direct message channel to fetch history for. | 
- **latest** | **f32**| End of time range of messages to include in results. | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**count** | Option<**i32**> | Number of messages to return, between 1 and 1000. |  |
+**unreads** | Option<**bool**> | Include `unread_count_display` in the output? |  |
+**inclusive** | Option<**bool**> | Include messages with latest or oldest timestamp in results. |  |
+**token** | Option<**String**> | Authentication token. Requires scope: `im:history` |  |
+**oldest** | Option<**f32**> | Start of time range of messages to include in results. |  |
+**channel** | Option<**String**> | Direct message channel to fetch history for. |  |
+**latest** | Option<**f32**> | End of time range of messages to include in results. |  |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -77,36 +74,31 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **im_list**
-> ::std::collections::HashMap<String, Value> im_list(ctx, optional)
+
+## im_list
+
+> ::std::collections::HashMap<String, serde_json::Value> im_list(cursor, token, limit)
 
 
 Lists direct message channels for the calling user.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **cursor** | **String**| Paginate through collections of data by setting the &#x60;cursor&#x60; parameter to a &#x60;next_cursor&#x60; attribute returned by a previous request&#39;s &#x60;response_metadata&#x60;. Default value fetches the first \&quot;page\&quot; of the collection. See [pagination](/docs/pagination) for more detail. | 
- **token** | **String**| Authentication token. Requires scope: &#x60;im:read&#x60; | 
- **limit** | **i32**| The maximum number of items to return. Fewer than the requested number of items may be returned, even if the end of the users list hasn&#39;t been reached. | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**cursor** | Option<**String**> | Paginate through collections of data by setting the `cursor` parameter to a `next_cursor` attribute returned by a previous request's `response_metadata`. Default value fetches the first \"page\" of the collection. See [pagination](/docs/pagination) for more detail. |  |
+**token** | Option<**String**> | Authentication token. Requires scope: `im:read` |  |
+**limit** | Option<**i32**> | The maximum number of items to return. Fewer than the requested number of items may be returned, even if the end of the users list hasn't been reached. |  |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -114,29 +106,31 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **im_mark**
-> ::std::collections::HashMap<String, Value> im_mark(ctx, token, channel, ts)
+
+## im_mark
+
+> ::std::collections::HashMap<String, serde_json::Value> im_mark(token, channel, ts)
 
 
 Sets the read cursor in a direct message channel.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
-  **token** | **String**| Authentication token. Requires scope: &#x60;im:write&#x60; | 
-  **channel** | **String**| Direct message channel to set reading cursor in. | 
-  **ts** | **String**| Timestamp of the most recently seen message. | 
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token** | **String** | Authentication token. Requires scope: `im:write` | [required] |
+**channel** | **String** | Direct message channel to set reading cursor in. | [required] |
+**ts** | **String** | Timestamp of the most recently seen message. | [required] |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -144,37 +138,32 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json
- - **Accept**: application/json
+- **Content-Type**: application/x-www-form-urlencoded, application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **im_open**
-> ::std::collections::HashMap<String, Value> im_open(ctx, optional)
+
+## im_open
+
+> ::std::collections::HashMap<String, serde_json::Value> im_open(token, return_im, user, include_locale)
 
 
 Opens a direct message channel.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token** | **String**| Authentication token. Requires scope: &#x60;im:write&#x60; | 
- **return_im** | **bool**| Boolean, indicates you want the full IM channel definition in the response. | 
- **user** | **String**| User to open a direct message channel with. | 
- **include_locale** | **bool**| Set this to &#x60;true&#x60; to receive the locale for this im. Defaults to &#x60;false&#x60; | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token** | Option<**String**> | Authentication token. Requires scope: `im:write` |  |
+**return_im** | Option<**bool**> | Boolean, indicates you want the full IM channel definition in the response. |  |
+**user** | Option<**String**> | User to open a direct message channel with. |  |
+**include_locale** | Option<**bool**> | Set this to `true` to receive the locale for this im. Defaults to `false` |  |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -182,36 +171,31 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json
- - **Accept**: application/json
+- **Content-Type**: application/x-www-form-urlencoded, application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **im_replies**
-> ::std::collections::HashMap<String, Value> im_replies(ctx, optional)
+
+## im_replies
+
+> ::std::collections::HashMap<String, serde_json::Value> im_replies(thread_ts, token, channel)
 
 
 Retrieve a thread of messages posted to a direct message conversation
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **thread_ts** | **f32**| Unique identifier of a thread&#39;s parent message | 
- **token** | **String**| Authentication token. Requires scope: &#x60;im:history&#x60; | 
- **channel** | **String**| Direct message channel to fetch thread from | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**thread_ts** | Option<**f32**> | Unique identifier of a thread's parent message |  |
+**token** | Option<**String**> | Authentication token. Requires scope: `im:history` |  |
+**channel** | Option<**String**> | Direct message channel to fetch thread from |  |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -219,8 +203,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

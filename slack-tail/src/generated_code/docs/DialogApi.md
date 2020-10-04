@@ -4,27 +4,29 @@ All URIs are relative to *https://slack.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**dialog_open**](DialogApi.md#dialog_open) | **Get** /dialog.open | 
+[**dialog_open**](DialogApi.md#dialog_open) | **get** /dialog.open | 
 
 
-# **dialog_open**
-> ::std::collections::HashMap<String, Value> dialog_open(ctx, token, trigger_id, dialog)
+
+## dialog_open
+
+> ::std::collections::HashMap<String, serde_json::Value> dialog_open(token, trigger_id, dialog)
 
 
 Open a dialog with a user
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
-  **token** | **String**| Authentication token. Requires scope: &#x60;none&#x60; | 
-  **trigger_id** | **String**| Exchange a trigger to post to the user. | 
-  **dialog** | **String**| The dialog definition. This must be a JSON-encoded string. | 
+
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token** | **String** | Authentication token. Requires scope: `none` | [required] |
+**trigger_id** | **String** | Exchange a trigger to post to the user. | [required] |
+**dialog** | **String** | The dialog definition. This must be a JSON-encoded string. | [required] |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -32,8 +34,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

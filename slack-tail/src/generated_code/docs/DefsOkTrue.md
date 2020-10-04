@@ -1,6 +1,7 @@
 # DefsOkTrue
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 

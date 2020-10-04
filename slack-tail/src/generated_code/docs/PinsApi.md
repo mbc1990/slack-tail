@@ -4,36 +4,31 @@ All URIs are relative to *https://slack.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**pins_add**](PinsApi.md#pins_add) | **Post** /pins.add | 
-[**pins_list**](PinsApi.md#pins_list) | **Get** /pins.list | 
-[**pins_remove**](PinsApi.md#pins_remove) | **Post** /pins.remove | 
+[**pins_add**](PinsApi.md#pins_add) | **post** /pins.add | 
+[**pins_list**](PinsApi.md#pins_list) | **get** /pins.list | 
+[**pins_remove**](PinsApi.md#pins_remove) | **post** /pins.remove | 
 
 
-# **pins_add**
-> ::std::collections::HashMap<String, Value> pins_add(ctx, optional)
+
+## pins_add
+
+> ::std::collections::HashMap<String, serde_json::Value> pins_add(token, timestamp, channel)
 
 
 Pins an item to a channel.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **timestamp** | **f32**| Timestamp of the message to pin. | 
- **token** | **String**| Authentication token. Requires scope: &#x60;pins:write&#x60; | 
- **channel** | **String**| Channel to pin the item in. | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token** | Option<**String**> | Authentication token. Requires scope: `pins:write` |  |
+**timestamp** | Option<**f32**> | Timestamp of the message to pin. |  |
+**channel** | Option<**String**> | Channel to pin the item in. |  |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -41,35 +36,30 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json
- - **Accept**: application/json
+- **Content-Type**: application/x-www-form-urlencoded, application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **pins_list**
-> Value pins_list(ctx, optional)
+
+## pins_list
+
+> serde_json::Value pins_list(token, channel)
 
 
 Lists items pinned to a channel.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **token** | **String**| Authentication token. Requires scope: &#x60;pins:read&#x60; | 
- **channel** | **String**| Channel to get pinned items for. | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token** | Option<**String**> | Authentication token. Requires scope: `pins:read` |  |
+**channel** | Option<**String**> | Channel to get pinned items for. |  |
 
 ### Return type
 
-[**Value**](Value.md)
+[**serde_json::Value**](serde_json::Value.md)
 
 ### Authorization
 
@@ -77,38 +67,33 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **pins_remove**
-> ::std::collections::HashMap<String, Value> pins_remove(ctx, optional)
+
+## pins_remove
+
+> ::std::collections::HashMap<String, serde_json::Value> pins_remove(token, file_comment, timestamp, file, channel)
 
 
 Un-pins an item from a channel.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **file_comment** | **String**| File comment to un-pin. | 
- **timestamp** | **f32**| Timestamp of the message to un-pin. | 
- **token** | **String**| Authentication token. Requires scope: &#x60;pins:write&#x60; | 
- **file** | **String**| File to un-pin. | 
- **channel** | **String**| Channel where the item is pinned to. | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**token** | Option<**String**> | Authentication token. Requires scope: `pins:write` |  |
+**file_comment** | Option<**String**> | File comment to un-pin. |  |
+**timestamp** | Option<**f32**> | Timestamp of the message to un-pin. |  |
+**file** | Option<**String**> | File to un-pin. |  |
+**channel** | Option<**String**> | Channel where the item is pinned to. |  |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -116,8 +101,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json
- - **Accept**: application/json
+- **Content-Type**: application/x-www-form-urlencoded, application/json
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

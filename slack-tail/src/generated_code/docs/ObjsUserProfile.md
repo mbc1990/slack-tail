@@ -1,39 +1,40 @@
 # ObjsUserProfile
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**always_active** | **bool** |  | [optional] [default to null]
-**api_app_id** | [***::models::DefsAppId**](defs_app_id.md) |  | [optional] [default to null]
-**avatar_hash** | **String** |  | [default to null]
-**bot_id** | [***::models::DefsBotId**](defs_bot_id.md) |  | [optional] [default to null]
-**display_name** | **String** |  | [default to null]
-**display_name_normalized** | **String** |  | [default to null]
-**email** | **String** |  | [optional] [default to null]
-**first_name** | **String** |  | [optional] [default to null]
-**guest_expiration_ts** | **i32** |  | [optional] [default to null]
-**guest_invited_by** | **String** |  | [optional] [default to null]
-**image_1024** | **String** |  | [optional] [default to null]
-**image_192** | **String** |  | [optional] [default to null]
-**image_24** | **String** |  | [optional] [default to null]
-**image_32** | **String** |  | [optional] [default to null]
-**image_48** | **String** |  | [optional] [default to null]
-**image_512** | **String** |  | [optional] [default to null]
-**image_72** | **String** |  | [optional] [default to null]
-**image_original** | **String** |  | [optional] [default to null]
-**is_custom_image** | **bool** |  | [optional] [default to null]
-**last_name** | **String** |  | [optional] [default to null]
-**phone** | **String** |  | [optional] [default to null]
-**real_name** | **String** |  | [default to null]
-**real_name_normalized** | **String** |  | [default to null]
-**skype** | **String** |  | [optional] [default to null]
-**status_emoji** | **String** |  | [optional] [default to null]
-**status_expiration** | **i32** |  | [optional] [default to null]
-**status_text** | **String** |  | [optional] [default to null]
-**status_text_canonical** | **String** |  | [optional] [default to null]
-**team** | [***::models::DefsWorkspaceId**](defs_workspace_id.md) |  | [optional] [default to null]
-**teams** | [***::models::DefsWorkspaceId**](defs_workspace_id.md) |  | [optional] [default to null]
-**title** | **String** |  | [optional] [default to null]
+**always_active** | Option<**bool**> |  | [optional]
+**api_app_id** | Option<**String**> |  | [optional]
+**avatar_hash** | **String** |  | 
+**bot_id** | Option<**String**> |  | [optional]
+**display_name** | **String** |  | 
+**display_name_normalized** | **String** |  | 
+**email** | Option<**String**> |  | [optional]
+**first_name** | Option<**String**> |  | [optional]
+**guest_expiration_ts** | Option<**i32**> |  | [optional]
+**guest_invited_by** | Option<**String**> |  | [optional]
+**image_1024** | Option<**String**> |  | [optional]
+**image_192** | Option<**String**> |  | [optional]
+**image_24** | Option<**String**> |  | [optional]
+**image_32** | Option<**String**> |  | [optional]
+**image_48** | Option<**String**> |  | [optional]
+**image_512** | Option<**String**> |  | [optional]
+**image_72** | Option<**String**> |  | [optional]
+**image_original** | Option<**String**> |  | [optional]
+**is_custom_image** | Option<**bool**> |  | [optional]
+**last_name** | Option<**String**> |  | [optional]
+**phone** | Option<**String**> |  | [optional]
+**real_name** | **String** |  | 
+**real_name_normalized** | **String** |  | 
+**skype** | Option<**String**> |  | [optional]
+**status_emoji** | Option<**String**> |  | [optional]
+**status_expiration** | Option<**i32**> |  | [optional]
+**status_text** | Option<**String**> |  | [optional]
+**status_text_canonical** | Option<**String**> |  | [optional]
+**team** | Option<**String**> |  | [optional]
+**teams** | Option<**String**> |  | [optional]
+**title** | Option<**String**> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 

@@ -1,12 +1,9 @@
-extern crate swagger;
+extern crate openapi;
 
-// pub mod apis;
-// pub mod models;
-mod slack_client;
-// mod codegen;
-
-use swagger::apis::*;
-use swagger::models::*;
+pub mod slack_client {
+    pub use openapi::apis::*;
+    pub use openapi::models::*;
+}
 
 #[cfg(test)]
 mod tests {
@@ -14,7 +11,8 @@ mod tests {
 
     #[test]
     fn it_works() {
-        let client = SlackClient::new();
+        let oauth_access_token = "xoxb-472934603414-1418425791745-VmKqXWVQQLg1O0G7qdCwUuc1";
+        let client = SlackClient::new(oauth_access_token);
         assert_eq!(2 + 2, 4);
     }
 }

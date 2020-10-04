@@ -4,33 +4,28 @@ All URIs are relative to *https://slack.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**api_test**](ApiApi.md#api_test) | **Get** /api.test | 
+[**api_test**](ApiApi.md#api_test) | **get** /api.test | 
 
 
-# **api_test**
-> ::std::collections::HashMap<String, Value> api_test(ctx, optional)
+
+## api_test
+
+> ::std::collections::HashMap<String, serde_json::Value> api_test(foo, error)
 
 
 Checks API calling code.
 
-### Required Parameters
+### Parameters
 
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **ctx** | **context.Context** | context containing the authentication | nil if no authentication
- **optional** | **map[string]interface{}** | optional parameters | nil if no parameters
 
-### Optional Parameters
-Optional parameters are passed through a map[string]interface{}.
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **foo** | **String**| example property to return | 
- **error** | **String**| Error response to return | 
+Name | Type | Description  | Required | Notes
+------------- | ------------- | ------------- | ------------- | -------------
+**foo** | Option<**String**> | example property to return |  |
+**error** | Option<**String**> | Error response to return |  |
 
 ### Return type
 
-[**::std::collections::HashMap<String, Value>**](Value.md)
+[**::std::collections::HashMap<String, serde_json::Value>**](serde_json::Value.md)
 
 ### Authorization
 
@@ -38,8 +33,8 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/x-www-form-urlencoded, application/json
- - **Accept**: application/json
+- **Content-Type**: Not defined
+- **Accept**: application/json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

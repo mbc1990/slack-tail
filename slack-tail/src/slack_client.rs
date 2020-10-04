@@ -1,22 +1,40 @@
-use swagger::apis::*;
-use swagger::models::*;
-use swagger::apis::configuration::Configuration;
-use swagger::apis::client::APIClient;
-use hyper::Client;
-use tokio_core::reactor::Core;
+use openapi::apis::configuration::Configuration;
+use openapi::apis::oauth_api::oauth_access;
+use openapi::apis::channels_api;
+use openapi::models::*;
+use tokio::runtime::Runtime;
+
+
 
 pub struct SlackClient {
+    configuration: Configuration
 }
 
 impl SlackClient  {
-    pub fn new() -> SlackClient {
-        let mut core = Core::new().unwrap();
-        let handle = core.handle();
-        let hyper_client = Client::new(&handle);
-        let configuration = Configuration::new(hyper_client);
-        let api_client = APIClient::new(configuration);
-        // TODO: Set up authentication, make a real request
+    pub fn new(oauth_access_token: &str) -> SlackClient {
+        let mut runtime = Runtime::new().expect("Failed to create Tokio runtime");
 
-        SlackClient {}
+        let mut configuration = Configuration::new();
+        configuration.oauth_access_token = Some(oauth_access_token.to_string());
+
+        let res_future = channels_api::channels_list(
+            &configuration,
+            Some(false),
+            None,
+            None,
+            None,
+           Some(true)
+        );
+
+        let res = runtime.block_on(res_future);
+        match res {
+            Ok(payload) => {
+                println!("good: {:?}", payload) ;
+            },
+            Err(err) => {
+                println!("Error: {:?}", err) ;
+            }
+        }
+        SlackClient {configuration}
     }
 }

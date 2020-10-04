@@ -1,10 +1,11 @@
 # ObjsFileShares
 
 ## Properties
+
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**private** | [***Value**](Value.md) |  | [optional] [default to null]
-**public** | [***Value**](Value.md) |  | [optional] [default to null]
+**private** | Option<[**serde_json::Value**](.md)> |  | [optional]
+**public** | Option<[**serde_json::Value**](.md)> |  | [optional]
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
 
