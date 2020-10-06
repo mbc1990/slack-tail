@@ -1,6 +1,8 @@
 extern crate openapi;
 
-pub mod slack_client {
+mod slack_client;
+
+pub mod raw_api {
     pub use openapi::apis::*;
     pub use openapi::models::*;
 }
@@ -11,6 +13,7 @@ mod tests {
 
     #[test]
     fn it_works() {
+
         let client = SlackClient::new(oauth_access_token);
         assert_eq!(2 + 2, 4);
     }
