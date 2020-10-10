@@ -1,7 +1,6 @@
 extern crate openapi;
 
 mod slack_client;
-mod tail_task;
 
 pub mod raw_api {
     pub use openapi::apis::*;
@@ -16,7 +15,6 @@ pub mod streaming {
 #[cfg(test)]
 mod tests {
     use crate::slack_client::SlackClient;
-    use futures::join;
 
     #[test]
     fn it_works() {
