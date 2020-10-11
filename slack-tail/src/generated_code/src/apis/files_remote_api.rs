@@ -157,7 +157,7 @@ pub async fn files_remote_info(configuration: &configuration::Configuration, tok
 }
 
 /// Retrieve information about a remote file added to Slack
-pub async fn files_remote_list(configuration: &configuration::Configuration, ts_to: Option<f32>, cursor: Option<&str>, ts_from: Option<f32>, token: Option<&str>, limit: Option<i32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesRemoteListError>> {
+pub async fn files_remote_list(configuration: &configuration::Configuration, ts_to: Option<f64>, cursor: Option<&str>, ts_from: Option<f64>, token: Option<&str>, limit: Option<i32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesRemoteListError>> {
 
     let local_var_client = &configuration.client;
 

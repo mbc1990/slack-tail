@@ -41,7 +41,7 @@ pub enum PinsRemoveError {
 
 
 /// Pins an item to a channel.
-pub async fn pins_add(configuration: &configuration::Configuration, token: Option<&str>, timestamp: Option<f32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<PinsAddError>> {
+pub async fn pins_add(configuration: &configuration::Configuration, token: Option<&str>, timestamp: Option<f64>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<PinsAddError>> {
 
     let local_var_client = &configuration.client;
 
@@ -118,7 +118,7 @@ pub async fn pins_list(configuration: &configuration::Configuration, token: Opti
 }
 
 /// Un-pins an item from a channel.
-pub async fn pins_remove(configuration: &configuration::Configuration, token: Option<&str>, file_comment: Option<&str>, timestamp: Option<f32>, file: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<PinsRemoveError>> {
+pub async fn pins_remove(configuration: &configuration::Configuration, token: Option<&str>, file_comment: Option<&str>, timestamp: Option<f64>, file: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<PinsRemoveError>> {
 
     let local_var_client = &configuration.client;
 

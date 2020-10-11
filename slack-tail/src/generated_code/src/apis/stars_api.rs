@@ -131,7 +131,7 @@ pub async fn stars_list(configuration: &configuration::Configuration, count: Opt
 }
 
 /// Removes a star from an item.
-pub async fn stars_remove(configuration: &configuration::Configuration, token: Option<&str>, file_comment: Option<&str>, timestamp: Option<f32>, channel: Option<&str>, file: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<StarsRemoveError>> {
+pub async fn stars_remove(configuration: &configuration::Configuration, token: Option<&str>, file_comment: Option<&str>, timestamp: Option<f64>, channel: Option<&str>, file: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<StarsRemoveError>> {
 
     let local_var_client = &configuration.client;
 

@@ -99,7 +99,7 @@ pub async fn im_close(configuration: &configuration::Configuration, token: &str,
 }
 
 /// Fetches history of messages and events from direct message channel.
-pub async fn im_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ImHistoryError>> {
+pub async fn im_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f64>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ImHistoryError>> {
 
     let local_var_client = &configuration.client;
 
@@ -268,7 +268,7 @@ pub async fn im_open(configuration: &configuration::Configuration, token: Option
 }
 
 /// Retrieve a thread of messages posted to a direct message conversation
-pub async fn im_replies(configuration: &configuration::Configuration, thread_ts: Option<f32>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ImRepliesError>> {
+pub async fn im_replies(configuration: &configuration::Configuration, thread_ts: Option<f64>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ImRepliesError>> {
 
     let local_var_client = &configuration.client;
 

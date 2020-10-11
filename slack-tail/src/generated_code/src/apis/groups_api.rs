@@ -262,7 +262,7 @@ pub async fn groups_create_child(configuration: &configuration::Configuration, t
 }
 
 /// Fetches history of messages and events from a private channel.
-pub async fn groups_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<GroupsHistoryError>> {
+pub async fn groups_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f64>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<GroupsHistoryError>> {
 
     let local_var_client = &configuration.client;
 
@@ -507,7 +507,7 @@ pub async fn groups_list(configuration: &configuration::Configuration, exclude_m
 }
 
 /// Sets the read cursor in a private channel.
-pub async fn groups_mark(configuration: &configuration::Configuration, token: Option<&str>, ts: Option<f32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<GroupsMarkError>> {
+pub async fn groups_mark(configuration: &configuration::Configuration, token: Option<&str>, ts: Option<f64>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<GroupsMarkError>> {
 
     let local_var_client = &configuration.client;
 
@@ -630,7 +630,7 @@ pub async fn groups_rename(configuration: &configuration::Configuration, token: 
 }
 
 /// Retrieve a thread of messages posted to a private channel
-pub async fn groups_replies(configuration: &configuration::Configuration, thread_ts: Option<f32>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<GroupsRepliesError>> {
+pub async fn groups_replies(configuration: &configuration::Configuration, thread_ts: Option<f64>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<GroupsRepliesError>> {
 
     let local_var_client = &configuration.client;
 

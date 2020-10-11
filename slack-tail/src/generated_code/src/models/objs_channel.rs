@@ -66,7 +66,7 @@ pub struct ObjsChannel {
     #[serde(rename = "previous_names", skip_serializing_if = "Option::is_none")]
     pub previous_names: Option<Vec<String>>,
     #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
-    pub priority: Option<f32>,
+    pub priority: Option<f64>,
     #[serde(rename = "purpose")]
     pub purpose: crate::models::ObjsChannelPurpose,
     #[serde(rename = "topic")]

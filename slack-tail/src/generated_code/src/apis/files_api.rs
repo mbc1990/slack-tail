@@ -248,7 +248,7 @@ pub async fn files_info(configuration: &configuration::Configuration, count: Opt
 }
 
 /// Lists & filters team files.
-pub async fn files_list(configuration: &configuration::Configuration, count: Option<&str>, channel: Option<&str>, ts_to: Option<f32>, ts_from: Option<f32>, token: Option<&str>, user: Option<&str>, show_files_hidden_by_limit: Option<bool>, page: Option<&str>, types: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesListError>> {
+pub async fn files_list(configuration: &configuration::Configuration, count: Option<&str>, channel: Option<&str>, ts_to: Option<f64>, ts_from: Option<f64>, token: Option<&str>, user: Option<&str>, show_files_hidden_by_limit: Option<bool>, page: Option<&str>, types: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesListError>> {
 
     let local_var_client = &configuration.client;
 
@@ -397,7 +397,7 @@ pub async fn files_remote_info(configuration: &configuration::Configuration, tok
 }
 
 /// Retrieve information about a remote file added to Slack
-pub async fn files_remote_list(configuration: &configuration::Configuration, ts_to: Option<f32>, cursor: Option<&str>, ts_from: Option<f32>, token: Option<&str>, limit: Option<i32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesRemoteListError>> {
+pub async fn files_remote_list(configuration: &configuration::Configuration, ts_to: Option<f64>, cursor: Option<&str>, ts_from: Option<f64>, token: Option<&str>, limit: Option<i32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesRemoteListError>> {
 
     let local_var_client = &configuration.client;
 
@@ -660,7 +660,7 @@ pub async fn files_shared_public_url(configuration: &configuration::Configuratio
 }
 
 /// Uploads or creates a file.
-pub async fn files_upload(configuration: &configuration::Configuration, channels: Option<&str>, title: Option<&str>, initial_comment: Option<&str>, filetype: Option<&str>, filename: Option<&str>, content: Option<&str>, token: Option<&str>, file: Option<&str>, thread_ts: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesUploadError>> {
+pub async fn files_upload(configuration: &configuration::Configuration, channels: Option<&str>, title: Option<&str>, initial_comment: Option<&str>, filetype: Option<&str>, filename: Option<&str>, content: Option<&str>, token: Option<&str>, file: Option<&str>, thread_ts: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<FilesUploadError>> {
 
     let local_var_client = &configuration.client;
 

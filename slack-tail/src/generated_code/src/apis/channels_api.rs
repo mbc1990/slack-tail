@@ -216,7 +216,7 @@ pub async fn channels_create(configuration: &configuration::Configuration, token
 }
 
 /// Fetches history of messages and events from a channel.
-pub async fn channels_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChannelsHistoryError>> {
+pub async fn channels_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f64>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChannelsHistoryError>> {
 
     let local_var_client = &configuration.client;
 
@@ -512,7 +512,7 @@ pub async fn channels_list(configuration: &configuration::Configuration, exclude
 }
 
 /// Sets the read cursor in a channel.
-pub async fn channels_mark(configuration: &configuration::Configuration, token: Option<&str>, ts: Option<f32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChannelsMarkError>> {
+pub async fn channels_mark(configuration: &configuration::Configuration, token: Option<&str>, ts: Option<f64>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChannelsMarkError>> {
 
     let local_var_client = &configuration.client;
 
@@ -597,7 +597,7 @@ pub async fn channels_rename(configuration: &configuration::Configuration, token
 }
 
 /// Retrieve a thread of messages posted to a channel
-pub async fn channels_replies(configuration: &configuration::Configuration, thread_ts: Option<f32>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChannelsRepliesError>> {
+pub async fn channels_replies(configuration: &configuration::Configuration, thread_ts: Option<f64>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChannelsRepliesError>> {
 
     let local_var_client = &configuration.client;
 

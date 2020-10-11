@@ -25,7 +25,7 @@ pub enum ChatScheduledMessagesListError {
 
 
 /// Returns a list of scheduled messages.
-pub async fn chat_scheduled_messages_list(configuration: &configuration::Configuration, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatScheduledMessagesListError>> {
+pub async fn chat_scheduled_messages_list(configuration: &configuration::Configuration, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<f64>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatScheduledMessagesListError>> {
 
     let local_var_client = &configuration.client;
 

@@ -52,7 +52,7 @@ pub struct ObjsGroup {
     #[serde(rename = "parent_group", skip_serializing_if = "Option::is_none")]
     pub parent_group: Option<String>,
     #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
-    pub priority: Option<f32>,
+    pub priority: Option<f64>,
     #[serde(rename = "purpose")]
     pub purpose: crate::models::ObjsChannelPurpose,
     #[serde(rename = "topic")]

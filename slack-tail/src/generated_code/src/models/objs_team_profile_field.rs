@@ -26,7 +26,7 @@ pub struct ObjsTeamProfileField {
     #[serde(rename = "options")]
     pub options: Vec<String>,
     #[serde(rename = "ordering")]
-    pub ordering: f32,
+    pub ordering: f64,
     #[serde(rename = "possible_values", skip_serializing_if = "Option::is_none")]
     pub possible_values: Option<Vec<String>>,
     #[serde(rename = "type")]
@@ -34,7 +34,7 @@ pub struct ObjsTeamProfileField {
 }
 
 impl ObjsTeamProfileField {
-    pub fn new(hint: String, id: String, label: String, options: Vec<String>, ordering: f32, _type: Type) -> ObjsTeamProfileField {
+    pub fn new(hint: String, id: String, label: String, options: Vec<String>, ordering: f64, _type: Type) -> ObjsTeamProfileField {
         ObjsTeamProfileField {
             field_name: None,
             hint,

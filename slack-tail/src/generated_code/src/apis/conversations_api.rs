@@ -273,7 +273,7 @@ pub async fn conversations_create(configuration: &configuration::Configuration, 
 }
 
 /// Fetches a conversation's history of messages and events.
-pub async fn conversations_history(configuration: &configuration::Configuration, inclusive: Option<bool>, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ConversationsHistoryError>> {
+pub async fn conversations_history(configuration: &configuration::Configuration, inclusive: Option<bool>, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<String>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ConversationsHistoryError>> {
 
     let local_var_client = &configuration.client;
 
@@ -696,7 +696,7 @@ pub async fn conversations_rename(configuration: &configuration::Configuration, 
 }
 
 /// Retrieve a thread of messages posted to a conversation
-pub async fn conversations_replies(configuration: &configuration::Configuration, inclusive: Option<bool>, ts: Option<f32>, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ConversationsRepliesError>> {
+pub async fn conversations_replies(configuration: &configuration::Configuration, inclusive: Option<bool>, ts: Option<f64>, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<f64>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ConversationsRepliesError>> {
 
     let local_var_client = &configuration.client;
 

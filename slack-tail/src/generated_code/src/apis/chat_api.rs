@@ -97,7 +97,7 @@ pub enum ChatUpdateError {
 
 
 /// Deletes a message.
-pub async fn chat_delete(configuration: &configuration::Configuration, token: Option<&str>, as_user: Option<bool>, ts: Option<f32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatDeleteError>> {
+pub async fn chat_delete(configuration: &configuration::Configuration, token: Option<&str>, as_user: Option<bool>, ts: Option<f64>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatDeleteError>> {
 
     let local_var_client = &configuration.client;
 
@@ -394,7 +394,7 @@ pub async fn chat_post_message(configuration: &configuration::Configuration, tok
 }
 
 /// Schedules a message to be sent to a channel.
-pub async fn chat_schedule_message(configuration: &configuration::Configuration, token: Option<&str>, thread_ts: Option<f32>, blocks: Option<&str>, attachments: Option<&str>, unfurl_links: Option<bool>, text: Option<&str>, link_names: Option<bool>, unfurl_media: Option<bool>, parse: Option<&str>, as_user: Option<bool>, post_at: Option<&str>, channel: Option<&str>, reply_broadcast: Option<bool>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatScheduleMessageError>> {
+pub async fn chat_schedule_message(configuration: &configuration::Configuration, token: Option<&str>, thread_ts: Option<f64>, blocks: Option<&str>, attachments: Option<&str>, unfurl_links: Option<bool>, text: Option<&str>, link_names: Option<bool>, unfurl_media: Option<bool>, parse: Option<&str>, as_user: Option<bool>, post_at: Option<&str>, channel: Option<&str>, reply_broadcast: Option<bool>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatScheduleMessageError>> {
 
     let local_var_client = &configuration.client;
 
@@ -465,7 +465,7 @@ pub async fn chat_schedule_message(configuration: &configuration::Configuration,
 }
 
 /// Returns a list of scheduled messages.
-pub async fn chat_scheduled_messages_list(configuration: &configuration::Configuration, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatScheduledMessagesListError>> {
+pub async fn chat_scheduled_messages_list(configuration: &configuration::Configuration, cursor: Option<&str>, token: Option<&str>, limit: Option<i32>, oldest: Option<f64>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatScheduledMessagesListError>> {
 
     let local_var_client = &configuration.client;
 

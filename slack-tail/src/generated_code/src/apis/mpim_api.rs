@@ -99,7 +99,7 @@ pub async fn mpim_close(configuration: &configuration::Configuration, token: &st
 }
 
 /// Fetches history of messages and events from a multiparty direct message.
-pub async fn mpim_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f32>, channel: Option<&str>, latest: Option<f32>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<MpimHistoryError>> {
+pub async fn mpim_history(configuration: &configuration::Configuration, count: Option<i32>, unreads: Option<bool>, inclusive: Option<bool>, token: Option<&str>, oldest: Option<f64>, channel: Option<&str>, latest: Option<f64>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<MpimHistoryError>> {
 
     let local_var_client = &configuration.client;
 
@@ -189,7 +189,7 @@ pub async fn mpim_list(configuration: &configuration::Configuration, cursor: Opt
 }
 
 /// Sets the read cursor in a multiparty direct message channel.
-pub async fn mpim_mark(configuration: &configuration::Configuration, token: Option<&str>, ts: Option<f32>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<MpimMarkError>> {
+pub async fn mpim_mark(configuration: &configuration::Configuration, token: Option<&str>, ts: Option<f64>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<MpimMarkError>> {
 
     let local_var_client = &configuration.client;
 
@@ -268,7 +268,7 @@ pub async fn mpim_open(configuration: &configuration::Configuration, token: Opti
 }
 
 /// Retrieve a thread of messages posted to a direct message conversation from a multiparty direct message.
-pub async fn mpim_replies(configuration: &configuration::Configuration, thread_ts: Option<f32>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<MpimRepliesError>> {
+pub async fn mpim_replies(configuration: &configuration::Configuration, thread_ts: Option<f64>, token: Option<&str>, channel: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<MpimRepliesError>> {
 
     let local_var_client = &configuration.client;
 

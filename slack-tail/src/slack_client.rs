@@ -25,17 +25,15 @@ impl SlackClient  {
         let my_channel = channel.clone();
         tokio::spawn(async move {
             println!("Querying channel");
-            // tx.send("test message 1".to_string());
             let mut last_message_timestamp = None;
             loop {
-                // tx.send("test message 2".to_string());
                 let history_result = conversations_api::conversations_history(
                     &my_conf,
                     Some(false),
                     None,
                     None,
                     Some(100),
-                    last_message_timestamp,
+                    last_message_timestamp.clone(),
                     Some(&my_channel),
                     None
                 ).await;
@@ -43,21 +41,18 @@ impl SlackClient  {
                 match history_result {
                     Ok(resp) => {
                         let messages = resp.get("messages").unwrap().as_array().unwrap();
-                        for message in messages.into_iter() {
+                        let mut updated_offset = false;
+                        for message in messages {
+                            if (!updated_offset) {
+                                let ts = message.get("ts").unwrap().as_str().unwrap();
+                                let my_ts = ts.to_string();
+                                last_message_timestamp = Some(my_ts);
+                                updated_offset = true;
+                            }
+
+                            // TODO: We're getting duplicates of the most recent message sent every query
                             tx.send(message.clone());
-                            // tx.send(message.as_str().unwrap().to_string());
                         }
-                        if messages.len() > 0 {
-                            let last_message = messages.last().unwrap();
-                            let ts = last_message.get("ts").unwrap();
-                            let ts_str = ts.as_str().unwrap();
-                            let ts_parsed = ts_str.parse::<f32>().unwrap();
-                            let ts_parsed_64= ts_str.parse::<f64>().unwrap();
-                            last_message_timestamp = Some(ts_parsed_64);
-                        }
-                        // tx.send("test message 3".to_string());
-                        println!("Got a response!");
-                        // TODO: Iterate and write to channel
                     },
                     Err(err) => {
                         println!("Error from slack api {:?}", err);

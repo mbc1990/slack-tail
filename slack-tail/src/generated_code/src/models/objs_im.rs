@@ -34,7 +34,7 @@ pub struct ObjsIm {
     #[serde(rename = "is_user_deleted")]
     pub is_user_deleted: bool,
     #[serde(rename = "priority", skip_serializing_if = "Option::is_none")]
-    pub priority: Option<f32>,
+    pub priority: Option<f64>,
     #[serde(rename = "user")]
     pub user: String,
 }
