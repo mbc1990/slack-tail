@@ -29,7 +29,7 @@ impl SlackClient  {
             loop {
                 let history_result = conversations_api::conversations_history(
                     &my_conf,
-                    Some(false),
+                    None,
                     None,
                     None,
                     Some(100),
@@ -43,14 +43,14 @@ impl SlackClient  {
                         let messages = resp.get("messages").unwrap().as_array().unwrap();
                         let mut updated_offset = false;
                         for message in messages {
+
+                            // First message is newest, so it becomes the oldest timestamp for the next query
                             if (!updated_offset) {
                                 let ts = message.get("ts").unwrap().as_str().unwrap();
                                 let my_ts = ts.to_string();
                                 last_message_timestamp = Some(my_ts);
                                 updated_offset = true;
                             }
-
-                            // TODO: We're getting duplicates of the most recent message sent every query
                             tx.send(message.clone());
                         }
                     },
