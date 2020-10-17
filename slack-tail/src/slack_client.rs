@@ -17,9 +17,19 @@ use std::io::Read;
 pub struct SlackClient {
     configuration: Configuration,
     user_id: String,
+    url: String,
     xoxs_token: Option<String>
 }
 
+pub fn construct_string(strs: &[&str]) -> String {
+    let mut ret = String::new();
+    for st in strs.iter() {
+        ret.push_str(st);
+    }
+    ret
+}
+
+// TODO: Move to other file? Re-integrate with SlackClient to reference self.configuration?
 fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Sender<Value>) -> JoinHandle<()> {
     let my_conf = conf.clone();
     let my_channel = channel_id.clone();
@@ -68,20 +78,23 @@ impl SlackClient  {
         let mut configuration = Configuration::new();
         configuration.oauth_access_token = Some(oauth_access_token.to_string());
         let my_conf = configuration.clone();
+
         let resp = auth_api::auth_test(
             &my_conf,
            ""
         ).await;
         let mut user_id = "".to_string();
+        let mut url = "".to_string();
         match resp {
             Ok(res) => {
                 user_id = res.get("user_id").unwrap().as_str().unwrap().to_string();
+                url = res.get("url").unwrap().as_str().unwrap().to_string();
             },
             Err(err) => {
                 println!("Error geting bot user id {:?}", err);
             }
         }
-        SlackClient {configuration: configuration, user_id: user_id, xoxs_token: None}
+        SlackClient {configuration: configuration, user_id: user_id, url: url, xoxs_token: None}
     }
 
     pub fn is_mention(&self, message: String) -> bool {
@@ -96,15 +109,14 @@ impl SlackClient  {
         if self.xoxs_token.is_none() {
             panic!("xoxs_token not set - you cannot use internal Slack APIs without setting the internal token (xoxs-)");
         }
-        // TODO: Need to get the team name somehow for this
-        let url = "https://slacktestingmbc.slack.com/api/emoji.add";
+        let url = construct_string(&[&self.url, "api/emoji.add"]);
         let client = reqwest::Client::new();
         let form = reqwest::multipart::Form::new()
             .text("name", emoji_name.clone())
             .text("mode", "data")
             .file("image", path);
         let my_token = self.xoxs_token.as_ref().unwrap().clone();
-        let res = client.post(url)
+        let res = client.post(&url)
             .multipart(form.unwrap())
             .bearer_auth(&my_token)
             .send();
