@@ -9,11 +9,15 @@ use tokio::time::delay_for;
 use serde_json::Value;
 use std::collections::HashMap;
 use tokio::task::JoinHandle;
+use std::path::Path;
+use std::fs::File;
+use std::io::Read;
 
 
 pub struct SlackClient {
     configuration: Configuration,
-    user_id: String
+    user_id: String,
+    xoxs_token: Option<String>
 }
 
 fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Sender<Value>) -> JoinHandle<()> {
@@ -77,11 +81,44 @@ impl SlackClient  {
                 println!("Error geting bot user id {:?}", err);
             }
         }
-        SlackClient {configuration: configuration, user_id: user_id}
+        SlackClient {configuration: configuration, user_id: user_id, xoxs_token: None}
     }
 
     pub fn is_mention(&self, message: String) -> bool {
         return message.contains(&self.user_id);
+    }
+
+    pub fn set_xoxs_token(&mut self, xoxs_token: String) {
+        self.xoxs_token = Some(xoxs_token);
+    }
+
+    pub async fn add_emoji(&self, emoji_name: String, path: String) {
+        if self.xoxs_token.is_none() {
+            panic!("xoxs_token not set - you cannot use internal Slack APIs without setting the internal token (xoxs-)");
+        }
+        // TODO: Need to get the team name somehow for this
+        let url = "https://slacktestingmbc.slack.com/api/emoji.add";
+        let client = reqwest::Client::new();
+        let form = reqwest::multipart::Form::new()
+            .text("name", emoji_name.clone())
+            .text("mode", "data")
+            .file("image", path);
+        let my_token = self.xoxs_token.as_ref().unwrap().clone();
+        let res = client.post(url)
+            .multipart(form.unwrap())
+            .bearer_auth(&my_token)
+            .send();
+        match res {
+            Ok(mut resp) => {
+                // TODO: Error handling, return Result<(), SomeKindOfError>
+                println!("Response:\n{:?}", resp);
+                let text = resp.text();
+                println!("{:?}", &text);
+            },
+            Err(err) => {
+                println!("Error adding emoji {:?}", err);
+            }
+        }
     }
 
     // Tails all channels the bot belongs to
