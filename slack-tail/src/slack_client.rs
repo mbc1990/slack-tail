@@ -1,6 +1,5 @@
 use openapi::apis::configuration::Configuration;
 use openapi::apis::conversations_api;
-use openapi::apis::users_api;
 use openapi::apis::auth_api;
 use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
@@ -9,9 +8,6 @@ use tokio::time::delay_for;
 use serde_json::Value;
 use std::collections::HashMap;
 use tokio::task::JoinHandle;
-use std::path::Path;
-use std::fs::File;
-use std::io::Read;
 
 
 pub struct SlackClient {
