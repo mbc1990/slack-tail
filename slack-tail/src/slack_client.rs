@@ -1,6 +1,5 @@
 use openapi::apis::configuration::Configuration;
 use openapi::apis::conversations_api;
-use openapi::apis::users_api;
 use openapi::apis::auth_api;
 use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
@@ -13,9 +12,20 @@ use tokio::task::JoinHandle;
 
 pub struct SlackClient {
     configuration: Configuration,
-    user_id: String
+    user_id: String,
+    url: String,
+    xoxs_token: Option<String>
 }
 
+pub fn construct_string(strs: &[&str]) -> String {
+    let mut ret = String::new();
+    for st in strs.iter() {
+        ret.push_str(st);
+    }
+    ret
+}
+
+// TODO: Move to other file? Re-integrate with SlackClient to reference self.configuration?
 fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Sender<Value>) -> JoinHandle<()> {
     let my_conf = conf.clone();
     let my_channel = channel_id.clone();
@@ -64,24 +74,48 @@ impl SlackClient  {
         let mut configuration = Configuration::new();
         configuration.oauth_access_token = Some(oauth_access_token.to_string());
         let my_conf = configuration.clone();
+
         let resp = auth_api::auth_test(
             &my_conf,
            ""
         ).await;
         let mut user_id = "".to_string();
+        let mut url = "".to_string();
         match resp {
             Ok(res) => {
                 user_id = res.get("user_id").unwrap().as_str().unwrap().to_string();
+                url = res.get("url").unwrap().as_str().unwrap().to_string();
             },
             Err(err) => {
                 println!("Error geting bot user id {:?}", err);
             }
         }
-        SlackClient {configuration: configuration, user_id: user_id}
+        SlackClient {configuration: configuration, user_id: user_id, url: url, xoxs_token: None}
     }
 
     pub fn is_mention(&self, message: String) -> bool {
         return message.contains(&self.user_id);
+    }
+
+    pub fn set_xoxs_token(&mut self, xoxs_token: String) {
+        self.xoxs_token = Some(xoxs_token);
+    }
+
+    pub fn add_emoji(&self, emoji_name: String, path: String) -> Result<reqwest::Response, reqwest::Error>{
+        if self.xoxs_token.is_none() {
+            panic!("xoxs_token not set - you cannot use internal Slack APIs without setting the internal token (xoxs-)");
+        }
+        let url = construct_string(&[&self.url, "api/emoji.add"]);
+        let client = reqwest::Client::new();
+        let form = reqwest::multipart::Form::new()
+            .text("name", emoji_name.clone())
+            .text("mode", "data")
+            .file("image", path);
+        let my_token = self.xoxs_token.as_ref().unwrap().clone();
+        return client.post(&url)
+            .multipart(form.unwrap())
+            .bearer_auth(&my_token)
+            .send();
     }
 
     // Tails all channels the bot belongs to
