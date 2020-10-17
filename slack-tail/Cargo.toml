@@ -11,6 +11,6 @@ openapi = { path = "src/generated_code/" }
 hyper = "0.13.8"
 serde_json = "1.0"
 futures = "0.3.5"
-tokio = {version="0.3.0", features=["sync", "time", "macros", "rt-multi-thread"]}
+tokio = {version="0.2.22", features=["sync", "time", "macros", "rt-threaded"]}
 hyper-tls = "0.4.3"
 reqwest = "0.10.8"
