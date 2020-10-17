@@ -105,7 +105,7 @@ impl SlackClient  {
         self.xoxs_token = Some(xoxs_token);
     }
 
-    pub async fn add_emoji(&self, emoji_name: String, path: String) {
+    pub fn add_emoji(&self, emoji_name: String, path: String) -> Result<reqwest::Response, reqwest::Error>{
         if self.xoxs_token.is_none() {
             panic!("xoxs_token not set - you cannot use internal Slack APIs without setting the internal token (xoxs-)");
         }
@@ -116,21 +116,10 @@ impl SlackClient  {
             .text("mode", "data")
             .file("image", path);
         let my_token = self.xoxs_token.as_ref().unwrap().clone();
-        let res = client.post(&url)
+        return client.post(&url)
             .multipart(form.unwrap())
             .bearer_auth(&my_token)
             .send();
-        match res {
-            Ok(mut resp) => {
-                // TODO: Error handling, return Result<(), SomeKindOfError>
-                println!("Response:\n{:?}", resp);
-                let text = resp.text();
-                println!("{:?}", &text);
-            },
-            Err(err) => {
-                println!("Error adding emoji {:?}", err);
-            }
-        }
     }
 
     // Tails all channels the bot belongs to
