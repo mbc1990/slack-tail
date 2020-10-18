@@ -79,11 +79,12 @@ impl SlackClient  {
         let mut configuration = Configuration::new();
         configuration.oauth_access_token = Some(oauth_access_token.to_string());
         let my_conf = configuration.clone();
-
+        println!("Getting bot user info...");
         let resp = auth_api::auth_test(
             &my_conf,
            ""
         ).await;
+        println!("Done.");
         let mut user_id = "".to_string();
         let mut url = "".to_string();
         match resp {
@@ -103,7 +104,7 @@ impl SlackClient  {
         return user != self.user_id && message.contains(&self.user_id);
     }
 
-    pub async fn send_message(&self, message: &str, channel: &str) {
+    pub async fn send_message(&self, message: &str, channel: &str, username: &str, icon_emoji: &str) {
         let my_conf = self.configuration.clone();
         let res = chat_api::chat_post_message(
             &my_conf,
@@ -117,11 +118,11 @@ impl SlackClient  {
             None,
             None,
             None,
+            Some(icon_emoji),
             None,
             None,
             None,
-            None,
-            None,
+            Some(username),
             None).await;
 
         match res {
