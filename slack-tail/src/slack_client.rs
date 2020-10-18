@@ -9,6 +9,7 @@ use tokio::time::delay_for;
 use serde_json::Value;
 use std::collections::HashMap;
 use tokio::task::JoinHandle;
+use crate::slack_message::SlackMessage;
 
 
 pub struct SlackClient {
@@ -27,7 +28,7 @@ pub fn construct_string(strs: &[&str]) -> String {
 }
 
 // TODO: Move to other file? Re-integrate with SlackClient to reference self.configuration?
-fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Sender<Value>) -> JoinHandle<()> {
+fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Sender<SlackMessage>) -> JoinHandle<()> {
     let my_conf = conf.clone();
     let my_channel = channel_id.clone();
     let handle = tokio::spawn(async move {
@@ -59,8 +60,8 @@ fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Send
                         }
                         let mut msg = message.clone();
                         // TODO: MessageWrapper or something...
-
-                        tx.send(message.clone());
+                        let to_send = SlackMessage{channel: my_channel.clone(), body: message.clone()};
+                        tx.send(to_send);
                     }
                 },
                 Err(err) => {
@@ -103,27 +104,8 @@ impl SlackClient  {
     }
 
     pub async fn send_message(&self, message: &str, channel: &str) {
-        /*
-            chat_post_message(configuration: &configuration::Configuration,
-            token: &str,
-            channel: &str,
-            attachments: Option<&str>,
-            unfurl_links: Option<bool>,
-            text: Option<&str>,
-            unfurl_media: Option<bool>,
-            parse: Option<&str>,
-            as_user: Option<&str>,
-            mrkdwn: Option<bool>,
-            blocks: Option<&str>,
-            icon_emoji: Option<&str>,
-            link_names: Option<bool>,
-            reply_broadcast: Option<bool>,
-            thread_ts: Option<&str>,
-            username: Option<&str>,
-            icon_url: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatPostMessageError>> {
-        */
         let my_conf = self.configuration.clone();
-        chat_api::chat_post_message(
+        let res = chat_api::chat_post_message(
             &my_conf,
             "",
             channel,
@@ -141,6 +123,15 @@ impl SlackClient  {
             None,
             None,
             None).await;
+
+        match res {
+            Ok(msg) => {
+                println!("Post message result: {:?}", msg);
+            },
+            Err(err) => {
+                println!("Post message error: {:?}", err);
+            }
+        }
     }
 
     pub fn set_xoxs_token(&mut self, xoxs_token: String) {
@@ -165,7 +156,7 @@ impl SlackClient  {
     }
 
     // Tails all channels the bot belongs to
-    pub async fn tail_member_of(&mut self) -> Receiver<Value> {
+    pub async fn tail_member_of(&mut self) -> Receiver<SlackMessage> {
         let (tx, rx) = mpsc::channel();
         let loops_conf = self.configuration.clone();
         let _task = tokio::spawn(async move {
@@ -208,50 +199,6 @@ impl SlackClient  {
                             live_api_pollers.insert(to_poll_channel_id.to_string(), handle);
                         }
                     });
-                delay_for(Duration::from_millis(2000)).await;
-            }
-        });
-        return rx;
-    }
-
-    pub fn tail_channel(&self, channel: String) -> Receiver<Value> {
-        let (tx, rx) = mpsc::channel();
-        let my_conf = self.configuration.clone();
-        let my_channel = channel.clone();
-        tokio::spawn(async move {
-            let mut last_message_timestamp = None;
-            loop {
-                let history_result = conversations_api::conversations_history(
-                    &my_conf,
-                    None,
-                    None,
-                    None,
-                    Some(100),
-                    last_message_timestamp.clone(),
-                    Some(&my_channel),
-                    None
-                ).await;
-
-                match history_result {
-                    Ok(resp) => {
-                        let messages = resp.get("messages").unwrap().as_array().unwrap();
-                        let mut updated_offset = false;
-                        for message in messages {
-
-                            // First message is newest, so it becomes the oldest timestamp for the next query
-                            if !updated_offset {
-                                let ts = message.get("ts").unwrap().as_str().unwrap();
-                                let my_ts = ts.to_string();
-                                last_message_timestamp = Some(my_ts);
-                                updated_offset = true;
-                            }
-                            tx.send(message.clone());
-                        }
-                    },
-                    Err(err) => {
-                        println!("Error from slack api {:?}", err);
-                    }
-                }
                 delay_for(Duration::from_millis(2000)).await;
             }
         });
