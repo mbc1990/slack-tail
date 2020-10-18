@@ -1,5 +1,6 @@
 use openapi::apis::configuration::Configuration;
 use openapi::apis::conversations_api;
+use openapi::apis::chat_api;
 use openapi::apis::auth_api;
 use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
@@ -56,6 +57,9 @@ fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Send
                             last_message_timestamp = Some(my_ts);
                             updated_offset = true;
                         }
+                        let mut msg = message.clone();
+                        // TODO: MessageWrapper or something...
+
                         tx.send(message.clone());
                     }
                 },
@@ -93,8 +97,50 @@ impl SlackClient  {
         SlackClient {configuration: configuration, user_id: user_id, url: url, xoxs_token: None}
     }
 
-    pub fn is_mention(&self, message: String) -> bool {
-        return message.contains(&self.user_id);
+    // TODO: *really* Need to refactor this into message structs that get deserialized from the response
+    pub fn is_mention(&self, message: String, user: String) -> bool {
+        return user != self.user_id && message.contains(&self.user_id);
+    }
+
+    pub async fn send_message(&self, message: &str, channel: &str) {
+        /*
+            chat_post_message(configuration: &configuration::Configuration,
+            token: &str,
+            channel: &str,
+            attachments: Option<&str>,
+            unfurl_links: Option<bool>,
+            text: Option<&str>,
+            unfurl_media: Option<bool>,
+            parse: Option<&str>,
+            as_user: Option<&str>,
+            mrkdwn: Option<bool>,
+            blocks: Option<&str>,
+            icon_emoji: Option<&str>,
+            link_names: Option<bool>,
+            reply_broadcast: Option<bool>,
+            thread_ts: Option<&str>,
+            username: Option<&str>,
+            icon_url: Option<&str>) -> Result<::std::collections::HashMap<String, serde_json::Value>, Error<ChatPostMessageError>> {
+        */
+        let my_conf = self.configuration.clone();
+        chat_api::chat_post_message(
+            &my_conf,
+            "",
+            channel,
+            None,
+            None,
+            Some(message),
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None,
+            None).await;
     }
 
     pub fn set_xoxs_token(&mut self, xoxs_token: String) {
