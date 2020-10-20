@@ -2,6 +2,8 @@ use openapi::apis::configuration::Configuration;
 use openapi::apis::conversations_api;
 use openapi::apis::chat_api;
 use openapi::apis::auth_api;
+
+// TODO: Replace all this with tokio channels, not std channels...
 use std::sync::mpsc;
 use std::sync::mpsc::{Receiver, Sender};
 use std::time::{Duration};
@@ -10,13 +12,15 @@ use serde_json::Value;
 use std::collections::HashMap;
 use tokio::task::JoinHandle;
 use crate::slack_message::SlackMessage;
+use crate::slack_message_send_task::SlackMessageSendTask;
 
 
 pub struct SlackClient {
     configuration: Configuration,
     user_id: String,
     url: String,
-    xoxs_token: Option<String>
+    xoxs_token: Option<String>,
+    message_send_tx: Sender<SlackMessageSendTask>
 }
 
 pub fn construct_string(strs: &[&str]) -> String {
@@ -25,6 +29,44 @@ pub fn construct_string(strs: &[&str]) -> String {
         ret.push_str(st);
     }
     ret
+}
+
+//
+fn start_writer_task(conf: Configuration) -> Sender<SlackMessageSendTask> {
+    let (tx, rx)  : (Sender<SlackMessageSendTask>, Receiver<SlackMessageSendTask> )= mpsc::channel();
+    tokio::spawn(async move {
+        loop {
+            // TODO: Block on rx, send messages as they come in
+            // ^^^ Next thing to do
+            match rx.recv() {
+                Ok(message_send_task) => {
+                    let my_conf = conf.clone();
+                    let res = chat_api::chat_post_message(
+                        &my_conf,
+                        "",
+                        &message_send_task.channel_id,
+                        None,
+                        None,
+                        Some(&message_send_task.message_body),
+                        None,
+                        None,
+                        None,
+                        None,
+                        None,
+                        Some(&message_send_task.emoji_icon),
+                        None,
+                        None,
+                        None,
+                        Some(&message_send_task.username),
+                        None).await;
+                },
+                Err(err) => {
+                    println!("Error receiving from message send channel {:?}", err);
+                }
+            }
+        }
+    });
+    return tx;
 }
 
 // TODO: Move to other file? Re-integrate with SlackClient to reference self.configuration?
@@ -96,12 +138,19 @@ impl SlackClient  {
                 println!("Error geting bot user id {:?}", err);
             }
         }
-        SlackClient {configuration: configuration, user_id: user_id, url: url, xoxs_token: None}
+        let message_send_tx = start_writer_task(my_conf.clone());
+        let sc = SlackClient {configuration: configuration, user_id: user_id, url: url, xoxs_token: None, message_send_tx: message_send_tx};
+
+        return sc;
     }
 
     // TODO: *really* Need to refactor this into message structs that get deserialized from the response
     pub fn is_mention(&self, message: String, user: String) -> bool {
         return user != self.user_id && message.contains(&self.user_id);
+    }
+
+    pub fn get_message_send_tx(&self) -> Sender<SlackMessageSendTask> {
+        return self.message_send_tx.clone();
     }
 
     pub async fn send_message(&self, message: &str, channel: &str, username: &str, icon_emoji: &str) {
