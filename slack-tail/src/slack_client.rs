@@ -3,9 +3,8 @@ use openapi::apis::conversations_api;
 use openapi::apis::chat_api;
 use openapi::apis::auth_api;
 
-// TODO: Replace all this with tokio channels, not std channels...
-use std::sync::mpsc;
-use std::sync::mpsc::{Receiver, Sender};
+use tokio::sync::mpsc;
+use tokio::sync::mpsc::{UnboundedReceiver, UnboundedSender};
 use std::time::{Duration};
 use tokio::time::delay_for;
 use serde_json::Value;
@@ -15,12 +14,13 @@ use crate::slack_message::SlackMessage;
 use crate::slack_message_send_task::SlackMessageSendTask;
 
 
+#[derive(Debug, Clone)]
 pub struct SlackClient {
     configuration: Configuration,
     user_id: String,
     url: String,
     xoxs_token: Option<String>,
-    message_send_tx: Sender<SlackMessageSendTask>
+    message_send_tx: UnboundedSender<SlackMessageSendTask>
 }
 
 pub fn construct_string(strs: &[&str]) -> String {
@@ -32,14 +32,14 @@ pub fn construct_string(strs: &[&str]) -> String {
 }
 
 //
-fn start_writer_task(conf: Configuration) -> Sender<SlackMessageSendTask> {
-    let (tx, rx)  : (Sender<SlackMessageSendTask>, Receiver<SlackMessageSendTask> )= mpsc::channel();
+fn start_writer_task(conf: Configuration) -> UnboundedSender<SlackMessageSendTask> {
+    let (tx, mut rx)  : (UnboundedSender<SlackMessageSendTask>, UnboundedReceiver<SlackMessageSendTask> )= mpsc::unbounded_channel();
     tokio::spawn(async move {
         loop {
             // TODO: Block on rx, send messages as they come in
             // ^^^ Next thing to do
-            match rx.recv() {
-                Ok(message_send_task) => {
+            match rx.recv().await {
+                Some(message_send_task) => {
                     let my_conf = conf.clone();
                     let res = chat_api::chat_post_message(
                         &my_conf,
@@ -60,8 +60,11 @@ fn start_writer_task(conf: Configuration) -> Sender<SlackMessageSendTask> {
                         Some(&message_send_task.username),
                         None).await;
                 },
-                Err(err) => {
-                    println!("Error receiving from message send channel {:?}", err);
+                None => {
+                    println!("Error receiving from message send channel ");
+                },
+                _ => {
+                    println!("Got something else?");
                 }
             }
         }
@@ -70,7 +73,7 @@ fn start_writer_task(conf: Configuration) -> Sender<SlackMessageSendTask> {
 }
 
 // TODO: Move to other file? Re-integrate with SlackClient to reference self.configuration?
-fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: Sender<SlackMessage>) -> JoinHandle<()> {
+fn tail_channel_to_existing_tx(conf: Configuration, channel_id: String, tx: UnboundedSender<SlackMessage>) -> JoinHandle<()> {
     let my_conf = conf.clone();
     let my_channel = channel_id.clone();
     let handle = tokio::spawn(async move {
@@ -149,7 +152,7 @@ impl SlackClient  {
         return user != self.user_id && message.contains(&self.user_id);
     }
 
-    pub fn get_message_send_tx(&self) -> Sender<SlackMessageSendTask> {
+    pub fn get_message_send_tx(&self) -> UnboundedSender<SlackMessageSendTask> {
         return self.message_send_tx.clone();
     }
 
@@ -206,8 +209,8 @@ impl SlackClient  {
     }
 
     // Tails all channels the bot belongs to
-    pub async fn tail_member_of(&mut self) -> Receiver<SlackMessage> {
-        let (tx, rx) = mpsc::channel();
+    pub async fn tail_member_of(&mut self) -> UnboundedReceiver<SlackMessage> {
+        let (tx, rx) = mpsc::unbounded_channel();
         let loops_conf = self.configuration.clone();
         let _task = tokio::spawn(async move {
             let mut live_api_pollers: HashMap<String, JoinHandle<()>> = HashMap::new();
