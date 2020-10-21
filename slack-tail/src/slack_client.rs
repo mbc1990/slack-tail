@@ -31,13 +31,10 @@ pub fn construct_string(strs: &[&str]) -> String {
     ret
 }
 
-//
 fn start_writer_task(conf: Configuration) -> UnboundedSender<SlackMessageSendTask> {
     let (tx, mut rx)  : (UnboundedSender<SlackMessageSendTask>, UnboundedReceiver<SlackMessageSendTask> )= mpsc::unbounded_channel();
     tokio::spawn(async move {
         loop {
-            // TODO: Block on rx, send messages as they come in
-            // ^^^ Next thing to do
             match rx.recv().await {
                 Some(message_send_task) => {
                     let my_conf = conf.clone();
